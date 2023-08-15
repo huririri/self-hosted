@@ -120,6 +120,8 @@ services:
   redis:
     <<: *restart_policy
     image: "redis:6.2.12-alpine"
+    ports:
+      - "$REDIS_BIND:6379/tcp"
     healthcheck:
       <<: *healthcheck_defaults
       test: redis-cli ping
@@ -183,6 +185,8 @@ services:
       zookeeper:
         <<: *depends_on-healthy
     image: "confluentinc/cp-kafka:5.5.7"
+    ports:
+      - "$KAFKA_BIND:9092/tcp"
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
